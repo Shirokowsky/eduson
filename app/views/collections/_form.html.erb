@@ -1,0 +1,25 @@
+<%= form_for(@collection) do |f| %>
+  <% if @collection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@collection.errors.count, "error") %> prohibited this collection from being saved:</h2>
+
+      <ul>
+      <% @collection.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, required:true, class:'center' %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description, required:true, rows:5 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

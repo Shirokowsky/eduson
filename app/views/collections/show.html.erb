@@ -1,0 +1,47 @@
+<% content_for :header do %>
+    <aside>
+      <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script><div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir"></div>
+      <br/>
+      <% if user_signed_in? && current_user.id == @user.id %>
+          <%= link_to edit_collection_path(@collection) do %>
+              <%= fa_stacked_icon 'pencil inverse', base:'circle' %>
+          <% end %>
+
+      <% end %>
+    </aside>
+
+    <i><%= @user.email %> collection:</i>
+    <h1><%= @collection.title %></h1>
+
+    <i><%= @collection.description %></i>
+<% end %>
+
+<% if user_signed_in? && current_user.id == @user.id %>
+    <article id="add_all">
+      <%= link_to new_collection_photo_path(@collection), id:'add_photo' do %>
+          <%= fa_stacked_icon 'plus inverse', base:'circle', text:'add photo' %>
+      <% end %>
+      <%= link_to new_collection_link_path(@collection), id:'add_link' do %>
+          <%= fa_stacked_icon 'plus inverse', base:'circle', text:'add link' %>
+      <% end %>
+    </article>
+    <%#= link_to 'add', new_collection_photo_path(@collection) %>
+<% end %>
+
+<%#= link_to 'Back', collections_path %>
+
+<article>
+  <ul>
+    <% @parts.each do |link| %>
+        <li>
+          <figure>
+            <%= image_tag(link.image, width:'200')%>
+            <figcaption>
+              <h4><%= link.title%></h4>
+              <i><%= link.description %></i>
+            </figcaption>
+          </figure>
+        </li>
+    <% end %>
+  </ul>
+</article>

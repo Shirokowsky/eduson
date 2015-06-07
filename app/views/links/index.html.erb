@@ -1,0 +1,22 @@
+<% content_for :header do %>
+    <h1>Listing Links</h1>
+<% end %>
+
+<article>
+  <ul>
+    <% @links.each do |link| %>
+        <li>
+        <%= image_tag(link.image, size: '50') %>
+        <h3><%= link_to link.title, link.url %></h3>
+          <br/>
+        <b><%= link.url %></b>
+        <%= link_to 'Show', link %>
+        <%= link_to 'Edit', edit_link_path(link) %>
+        <%= link_to 'Destroy', link, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </li>
+    <% end %>
+  </ul>
+
+</article>
+
+<%= link_to 'New Link', new_link_path %>

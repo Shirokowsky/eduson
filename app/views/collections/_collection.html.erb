@@ -1,0 +1,21 @@
+<article>
+  <% if user_signed_in? && current_user.id == collection.patternable_id %>
+      <aside>
+        <%= link_to edit_collection_path(collection), class:'button' do %>
+            <%= fa_icon 'pencil', text:'edit' %>
+        <% end %>
+        <%= link_to collection, method: :delete, data: { confirm: 'Are you sure?' }, class:'button' do %>
+            <%= fa_icon 'trash' %>
+        <% end %>
+      </aside>
+  <% end %>
+
+  <% @user = User.find_by_id(collection.patternable_id) %>
+  <i><%= @user.email %> collection:</i><br/>
+  <%= link_to collection do %>
+      <h3><%= collection.title %></h3>
+  <% end %>
+  <section>
+    <i><%= collection.description %></i>
+  </section>
+</article>

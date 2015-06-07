@@ -1,0 +1,23 @@
+<title><%= @title || 'Eduson test' %></title>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="author" content="<%= @author || 'MS' %>">
+<meta name="copyright" lang="ru" content="MS" />
+<meta name="document-state" content="Dynamic" />
+<meta name="resource-type" content="document" />
+
+<meta name="robots" content="all" />
+
+<meta http-equiv="content-language" content="ru" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta property="og:site_name" content="EdusonTest" />
+<meta property="og:title" content="<%= @title || 'Eduson Test' %>" />
+<meta property="og:description" content="<%= @ogdescription || 'Wanna work @ Eduson. Test Page' %>" />
+<meta property="og:url" content="<%= request.original_url %>" />
+<meta property="og:image" content="<%= image_path(@ogimage) %>" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:type" content="article" />
+
+<%= favicon_link_tag 'favicon.png' %>

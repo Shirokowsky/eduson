@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<% content_for :header do %>
+    <% if user_signed_in? && current_user.id == @user.id %>
+        <aside>
+          <%= link_to edit_photo_path(@photo) do %>
+              <%= fa_icon 'pencil', base:'circle', text:'edit'%>
+          <% end %>
+        </aside>
+    <% end %>
+    <h1><%= @photo.title %></h1>
+    <i><%= @photo.description %></i>
+<% end %>
+
+<article>
+  <%= image_tag @photo.illustration(:full) %>
+  <hr/>
+  <%= link_to 'open original size', @photo.illustration.url %>
+  <br/>
+  <label>Copy it</label>
+  <%= text_field(:photo, :illustration, size: 50) %>
+</article>
+
+<article>
+  <%= link_to image_tag(@photo.illustration.url(:full)), @photo.illustration.url(:original) %>
+</article>
+<%= link_to 'Back', photos_path %>

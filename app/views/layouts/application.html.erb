@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render 'layouts/meta' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<nav>
+  <section>
+    <ul>
+      <li><%= link_to 'Collections', collections_path %></li>
+    </ul>
+    <ul>
+      <%= yield :nav %>
+      <li><%= link_to 'Make collection', new_collection_path %></li>
+      <% if user_signed_in? %>
+            <li><%= current_user.email %> (<%= current_user.sign_in_count %>)</li>
+            <li><%= link_to 'logout', destroy_user_session_path, method: :delete %></li>
+      <% else %>
+          <li><%= link_to 'login', login_path %></li>
+      <% end %>
+    </ul>
+  </section>
+</nav>
+
+<main>
+  <header>
+    <%= yield :header %>
+  </header>
+  <%= yield %>
+</main>
+
+<footer>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+</footer>
+
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+</body>
+</html>

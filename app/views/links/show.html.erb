@@ -1,0 +1,9 @@
+<article>
+  <h3><%= @link.url %></h3>
+  <%= image_tag @link.image %>
+  <p><%= @link.title %></p>
+  <p><%= @link.description %></p>
+</article>
+
+<%= link_to 'Edit', edit_link_path(@link) %> |
+<%= link_to 'Back', links_path %>
