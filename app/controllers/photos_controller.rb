@@ -1,8 +1,8 @@
 class PhotosController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-
   before_action :set_photo, only: [:show, :edit, :update, :destroy]
   before_action :set_collection
+
+  include Set_Owner
 
   def index
     @photos = Photo.all
@@ -46,13 +46,6 @@ class PhotosController < ApplicationController
   end
 
   private
-
-    def valid_user
-      unless @collection.patternable_id == @parent.id
-        redirect_to root_path, notice: 'Access denied'
-      end
-    end
-
 
     def set_collection
       @collection = Collection.find_by_id(params[:collection_id])

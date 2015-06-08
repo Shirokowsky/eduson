@@ -1,8 +1,8 @@
 class LinksController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-
   before_action :set_collection
   before_action :set_link, only: [:show, :edit, :update, :destroy]
+
+  include Set_Owner
 
   def index
     @links = Link.all
@@ -24,17 +24,16 @@ class LinksController < ApplicationController
 
     require 'open-uri'
     doc = Nokogiri::HTML(open(@link.url).read, nil, 'utf-8')
-    if @link.url.include? 'www.youtube.com/' || 'https:youtu.be/'
-      p 'YOUTUBE!'
-    end
     @link.title = doc.xpath("//meta[@property='og:title']/@content")
     @link.description = doc.xpath("//meta[@property='og:description']/@content") || doc.xpath("//meta[@name='description']/@content")
+
+    #TODO find first image or setup flavicon from target site
     @link.image = doc.xpath("//meta[@property='og:image']/@content")
 
     flash[:notice] = 'Link created' if @link.save
 
     respond_to do |format|
-      format.html {redirect_to @collection}
+      format.html { redirect_to @collection }
       format.js
     end
 
@@ -64,12 +63,6 @@ class LinksController < ApplicationController
 
   def set_collection
     @collection = Collection.find(params[:collection_id])
-  end
-
-  def valid_user
-    unless @collection.patternable_id == @parent.id
-      redirect_to root_path, notice: 'Access denied'
-    end
   end
 
     def set_link

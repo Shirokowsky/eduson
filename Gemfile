@@ -18,9 +18,13 @@ group :development, :test do
 end
 
 gem 'puma'
+gem 'dalli'
 gem 'normalize-rails'
 gem 'devise'
 gem 'paperclip'
 gem 'font-awesome-rails'
 gem 'autoprefixer-rails'
 gem 'nokogiri'
+
+gem 'pg'
+gem 'react-rails'

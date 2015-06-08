@@ -1,8 +1,8 @@
 class CollectionsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_collection, only: [:show, :edit, :update, :destroy]
   before_action :get_parent
-  before_action :valid_user, except: [:index, :show, :new, :create]
+
+  include Set_Owner
 
   def index
     @collections = Collection.all
@@ -16,7 +16,9 @@ class CollectionsController < ApplicationController
     @title = @collection.title + ' by ' + @user.email
     @ogdescription = @collection.title + ' collection'
     @ogauthor = @user.email
-    @ogimage = @parts.first.image
+    if @parts.size > 0
+      @ogimage = @parts.first.image
+    end
   end
 
   def new
@@ -55,12 +57,6 @@ class CollectionsController < ApplicationController
 
     def get_parent
       @parent = current_user
-    end
-
-    def valid_user
-      unless @collection.patternable_id == @parent.id
-        redirect_to root_path, notice: 'Access denied'
-      end
     end
 
     def set_collection
