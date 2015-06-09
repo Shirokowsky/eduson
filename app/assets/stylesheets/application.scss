@@ -169,10 +169,20 @@ main{
     figure {
       display: table;
       margin: 0; padding: 0;
+      &:hover{
+        a{
+          color:red;
+        }
+      }
       figcaption {
         padding: 15px;
         display: table-cell;
         vertical-align: middle;
+        a {
+          display: inline-block;
+          color: silver;
+          text-decoration: underline;
+        }
       }
       img {
         @extend .trans;
@@ -210,7 +220,7 @@ form {
     display: inline-block; margin: 1em;
     color: gray;
   }
-  input[type='text'], input[type='email'],input[type='password']{
+  input[type='text'], input[type='email'],input[type='password'], input[type='url']{
     background: none; border: none;
     border-bottom: 1px solid $darkest;
     width: 100%;

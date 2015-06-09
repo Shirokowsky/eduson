@@ -21,22 +21,15 @@ class LinksController < ApplicationController
 
   def create
     @link = @collection.links.build(link_params)
-
-    require 'open-uri'
-    doc = Nokogiri::HTML(open(@link.url).read, nil, 'utf-8')
-    @link.title = doc.xpath("//meta[@property='og:title']/@content")
-    @link.description = doc.xpath("//meta[@property='og:description']/@content") || doc.xpath("//meta[@name='description']/@content")
-
-    #TODO find first image or setup flavicon from target site
-    @link.image = doc.xpath("//meta[@property='og:image']/@content")
-
-    flash[:notice] = 'Link created' if @link.save
-
-    respond_to do |format|
-      format.html { redirect_to @collection }
-      format.js
+    if @link.url_valid?
+      flash[:notice] = 'Link created' if @link.save
+      respond_to do |format|
+        format.html { redirect_to @collection }
+        format.js
+      end
+    else
+      redirect_to @collection, notice: 'wrong url'
     end
-
   end
 
   def update
