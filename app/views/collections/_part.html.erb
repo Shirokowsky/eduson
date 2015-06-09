@@ -4,7 +4,7 @@
     <figcaption>
       <h4><%= part.title %></h4>
       <i><%= part.description %></i>
-      <% if part.url? %>
+      <% if part.has_attribute?(:url) %>
           <%= link_to 'read more', part.url, target: "_blank" %>
       <% else %>
           <%= link_to 'show me image', part.image(:full), target: "_blank" %>
