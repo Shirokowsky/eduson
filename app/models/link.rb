@@ -15,14 +15,16 @@ class Link < ActiveRecord::Base
   def noko
     require 'open-uri'
     require 'zlib'
-    stream = open(self.url, 'User-Agent' => 'ruby')
+    stream = open(self.url, 'User-Agent' => 'Mozilla/5.0')
     if stream.content_encoding.empty?
       decoded = stream
     else
       decoded = Zlib::GzipReader.new stream
     end
 
-    doc = Nokogiri::HTML(decoded, nil, 'utf-8')
+    doc = Nokogiri::HTML(decoded)
+    doc.encoding = 'UTF-8'
+
     self.title = gimme_title doc
     self.description = gimme_description doc
     self.image = gimme_image doc
@@ -33,7 +35,7 @@ class Link < ActiveRecord::Base
   end
 
   def gimme_image doc
-    doc.xpath("//link[@rel='shortcut icon']/@href")[0] || doc.xpath("//meta[@property='og:image']/@content")[0]  || doc.xpath("//link[@type='image/x-icon']/@content")
+    doc.xpath("//meta[@property='og:image']/@content")[0] || doc.xpath("//link[@rel='shortcut icon']/@href")[0]  || doc.xpath("//link[@type='image/x-icon']/@content")
   end
 
   def gimme_title doc
