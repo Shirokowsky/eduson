@@ -15,15 +15,16 @@ class Link < ActiveRecord::Base
   def noko
     require 'open-uri'
     require 'zlib'
+
     stream = open(self.url, 'User-Agent' => 'Mozilla/5.0')
     if stream.content_encoding.empty?
       decoded = stream
     else
-      decoded = Zlib::GzipReader.new stream
+      #decoded = Zlib::GzipReader.new stream
+      decoded = Zlib::Deflate.deflate stream
     end
 
-    doc = Nokogiri::HTML(decoded)
-    doc.encoding = 'UTF-8'
+    doc = Nokogiri::HTML(decoded, nil ,'utf-8')
 
     self.title = gimme_title doc
     self.description = gimme_description doc
